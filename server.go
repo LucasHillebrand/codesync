@@ -62,6 +62,16 @@ func srv(port int, path string) {
 							}
 						}
 					}
+				} else if string(mode) == "list" {
+					dirs, _ := os.ReadDir(path)
+					files := make([]string, 0)
+					for i := 0; i < len(dirs); i++ {
+						name := dirs[i].Name()
+						files = append(files, name[0:len(name)-len(".comp")])
+					}
+					str := toString(files)
+					conn.Write(uint64ToBytes(uint64(len(str))))
+					conn.Write([]byte(str))
 				}
 			}(conn)
 		}

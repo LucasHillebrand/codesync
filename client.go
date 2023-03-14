@@ -72,6 +72,13 @@ func cli() {
 		str = str[0:size]
 		decompress(loadStream(str))
 		//fmt.Println(str)
+	} else if len(os.Args) >= 2 && os.Args[1] == "list" {
+		conn.Write([]byte("list"))
+		bsize := make([]byte, 8)
+		conn.Read(bsize)
+		size := bytesToUint64(bsize)
+		bstr := make([]byte, size)
+		conn.Read(bstr)
+		fmt.Printf("Available Items:\n\n%s\n", string(bstr))
 	}
-
 }
