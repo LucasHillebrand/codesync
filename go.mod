@@ -1,3 +1,3 @@
-module syncr
+module codesync
 
 go 1.20
